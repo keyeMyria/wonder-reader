@@ -7,8 +7,8 @@ const {dialog} = require('electron').remote;
 const df = require('./directory.js');
 const fs = require('fs');
 const isComic = require('./isComic.js');
-const isThere = require('is-there');
 const path = require('path');
+const sander = require('sander');
 
 const libStatus = document.getElementById('libStatus');
 const sideLib = document.getElementById('sideLib');
@@ -35,7 +35,7 @@ toggle = () => {
 
 // Builds the library with proper HTML
 buildLibrary = (directory, listID) => {
-  if (!isThere(directory)) {
+  if (!sander.existsSync(directory)) {
     console.error(`${directory} not found.`);
     libStatus.innerHTML = libError;
     return;
@@ -119,7 +119,7 @@ folders = (directory, ID) => { // Toggle for folders in MainLib
   for (let i = 0; i < folders.length; i++) {
     let newID = folders[i].dataset.id;
     let newDirectory = folders[i].dataset.directory;
-    folders[i].querySelector('span').addEventListener('click', function() {
+    folders[i].querySelector('span').addEventListener('click', () => {
       if ($(`#${newID}`).children().length == 0)
         buildLibrary(newDirectory, newID);
       let _ul = $(this).next('ul');

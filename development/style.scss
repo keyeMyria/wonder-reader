@@ -1,15 +1,15 @@
 // ./app/css/style.scss */
 $white: #fff;
 $off-white: #f3f3f3;
-$white-opaque: rgba(255, 255, 255, 0.9);
-$white-opaque-deg: rgba(255, 255, 255, 0.8);
-$white-trans-deg: rgba(255, 255, 255, 0.1);
+$white-opaque: rgba(255, 255, 255, .9);
+$white-opaque-deg: rgba(255, 255, 255, .8);
+$white-trans-deg: rgba(255, 255, 255, .1);
 $gray: #808080;
 $gray-trans: rgba(144, 144, 144, .2);
-$dark-trans: rgba(0, 0, 0, 0.1);
-$dark-trans-deg: rgba(0, 0, 0, 0.2);
-$dark-trans-mid: rgba(0, 0, 0, 0.5);
-$dark-trans-opq: rgba(0, 0, 0, 0.8);
+$dark-trans: rgba(0, 0, 0, .1);
+$dark-trans-deg: rgba(0, 0, 0, .2);
+$dark-trans-mid: rgba(0, 0, 0, .5);
+$dark-trans-opq: rgba(0, 0, 0, .8);
 $black: #000;
 $transparent: rgba(0, 0, 0, 0);
 $teal: #0e2e3b;
@@ -66,7 +66,7 @@ button {
   background-color: $dark-trans;
   border: 0;
   color: $white-opaque;
-  transition: all 0.5s;
+  transition: all .5s;
   padding: 6px 6px 7px;
   cursor: pointer;
 }
@@ -129,7 +129,7 @@ button:disabled:hover {
 
 .title {
   margin-left: 15px;
-  transition: margin-left 0.5s;
+  transition: margin-left .5s;
   float: left;
 }
 
@@ -176,7 +176,7 @@ button:disabled:hover {
     background: $comic-bleu;
     border-radius: 4px;
     border: 2px solid $white-opaque-deg;
-    transition: all 0.5s;
+    transition: all .5s;
   }
 
   input[type=range]:focus::-webkit-slider-runnable-track {
@@ -195,7 +195,7 @@ button:disabled:hover {
     padding: 3px 26px 0 0;
     border: 2px solid $white-opaque-deg;
     outline: none;
-    transition: all 0.5s;
+    transition: all .5s;
   }
 
   #zoomText:focus {
@@ -305,7 +305,7 @@ button#trash {
     background: $comic-bleu;
     border-radius: 4px;
     border: 2px solid $white-opaque-deg;
-    transition: all 0.5s;
+    transition: all .5s;
   }
 
   input[type=range]:focus::-webkit-slider-runnable-track {
@@ -344,7 +344,7 @@ button#trash {
 
   ul {
     clear: both;
-    font-size: 10px;
+    font-size: 12px;
     color: $white;
 
     ul {
@@ -354,9 +354,10 @@ button#trash {
   }
 
   li {
+    font-weight: bold;
     padding: 2px 0 2px 15px;
     background: $dark-trans-deg;
-    transition: box-shadow 0.15s;
+    transition: box-shadow .15s;
     border-top: 1px solid $dark-trans-mid;
   }
 
@@ -365,7 +366,6 @@ button#trash {
   }
 
   li.folder {
-    font-weight: bold;
     padding: 2px 0 2px 15px;
     background: $white-trans-deg;
     border-top: 1px solid $white-trans-deg;
@@ -389,6 +389,7 @@ button#trash {
 
     .fa-file {
       color: $input-bleu;
+      margin-right: 20px;
     }
 
     .fa-folder {
@@ -408,7 +409,7 @@ button#trash {
     }
 
     .fa-caret-down {
-      transition: transform 0.5s;
+      transition: transform .5s;
     }
 
     .rotate {
@@ -433,7 +434,7 @@ button#trash {
   position: fixed;
   top: -30px;
   padding: 0;
-  transition: top 0.25s;
+  transition: top .25s;
   text-shadow: 0 5px 0 $teal;
   z-index: 1;
   background: none;
@@ -443,7 +444,7 @@ button#trash {
     font-size: 110px;
     padding: 0;
     color: $white;
-    transition: all 0.25s;
+    transition: all .25s;
   }
 }
 
@@ -496,7 +497,7 @@ button#trash {
   z-index: 2;
   border-right: 3px solid $teal;
   word-wrap: break-word;
-  transition: margin-left 0.65s;
+  transition: margin-left .65s;
   box-shadow: 3px 0 5px $dark-trans-mid;
 
   h1 {
@@ -510,7 +511,7 @@ button#trash {
     float: left;
     width: 100%;
     height: 90%;
-    transition: all 0.25s;
+    transition: all .25s;
     overflow-y: scroll;
   }
 
@@ -533,7 +534,7 @@ button#trash {
       padding: 3px 0 3px 10px;
       display: block;
       text-decoration: none;
-      transition: all 0.25s;
+      transition: all .25s;
       color: $white;
       box-shadow: inset 3px 0 0 0 $lib-color;
     }
@@ -550,7 +551,7 @@ button#trash {
     span {
       display: block;
       text-decoration: none;
-      transition: all 0.25s;
+      transition: all .25s;
       padding: 3px 0 3px 10px;
       color: $white;
       box-shadow: inset 2px 0 0 1px $lib-color;
@@ -580,7 +581,7 @@ button#trash {
 }
 
 #libSlider {
-  transition: right 0.25s;
+  transition: right .25s;
   position: absolute;
   font-size: 65px;
   top: 50vh;
@@ -636,7 +637,7 @@ button#trash {
     width: 50%;
   }
   #innerWindow {
-    transition: filter 0.3s;
+    transition: filter .3s;
   }
   .navi-button {
     position: fixed;
@@ -676,7 +677,7 @@ button#trash {
   background: $comic-bleu;
   position: fixed;
   border-radius: 50%;
-  opacity: 0.85;
+  opacity: .85;
   //mix-blend-mode: exclusion;
   box-shadow: 0 0 12px -3px $black;
   z-index: 5;

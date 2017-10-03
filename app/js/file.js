@@ -5,11 +5,10 @@ const $ = require('jquery');
 const {dialog} = require('electron').remote;
 const fs = require('fs');
 const isRar = require('is-rar');
-const isThere = require('is-there'); // https://www.npmjs.com/package/is-there
 const isZip = require('is-zip');
-const mkdirp = require('mkdirp'); // https://github.com/substack/node-mkdirp
 const os = require('os'); // https://nodejs.org/api/os.html
 const path = require('path');
+const sander = require('sander');
 const unzip = require('unzip2');
 const unrar = require('electron-unrar-js');
 
@@ -94,7 +93,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   document.getElementById('trash').dataset.current = comic;
   // tempFolder Variable for loaded comic
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', comic);
-  if (isThere(tempFolder)) {
+  if (sander.existsSync(tempFolder)) {
     tempFolder = df.merge(tempFolder);
     extractedImages = fs.readdirSync(tempFolder);
     extractedImages.length === 0
@@ -102,7 +101,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
       : postExtract(fileName, tempFolder, extractedImages);
   } else {
     preLoad();
-    mkdirp.sync(tempFolder, {'mode': '0777'});
+    sander.mkdirSync(tempFolder, {'mode': '0777'});
     fileRouter(fileName, tempFolder, looper);
   }
 }; // End Directory checker
@@ -177,7 +176,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
     let dest = path.join(tempFolder, file.fileHeader.name);
     !file.fileHeader.flags.directory
       ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
-      : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
+      : sander.mkdirSync(path.join(tempFolder, file.fileHeader.name));
   });
   extractRouter(fileName, tempFolder, looper);
 };

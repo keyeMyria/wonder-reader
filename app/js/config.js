@@ -1,10 +1,9 @@
 const dirTree = require('directory-tree');
-const isThere = require('is-there');
 const jsonfile = require('jsonfile');
 const library = require('./library.js');
-const mkdirp = require('mkdirp');
 const os = require('os');
 const path = require('path');
+const sander = require('sander');
 
 const comics = path.join(os.tmpdir(), 'wonderReader', 'json', 'comics.json');
 const configFile = path.join(os.tmpdir(), 'wonderReader', 'json', 'config.json');
@@ -55,7 +54,7 @@ configSave = (type, val) => {
 onStart = () => {
   let libStatus = document.getElementById('libStatus');
   let obj;
-  switch (isThere(configFile)) {
+  switch (sander.existsSync(configFile)) {
     case true:
       jsonfile.readFile(configFile, function(err, obj) {
         if (err)
@@ -68,7 +67,7 @@ onStart = () => {
           columnIcon.classList.remove('fa-square-o');
           columnIcon.classList.add('fa-minus-square-o');
         }
-        isThere(obj.library)
+        sander.existsSync(obj.library)
           ? library.builder(obj.library)
           : libStatus.innerHTML = libNotFound;
       });
@@ -76,20 +75,16 @@ onStart = () => {
     default:
       obj = template;
       libStatus.innerHTML = libIsEmpty;
-      mkdirp(path.dirname(configFile), function(err) {
+      sander.mkdir(path.dirname(configFile)).then(jsonfile.writeFile(configFile, obj, (err) => {
         if (err)
           console.error(err);
-        jsonfile.writeFile(configFile, obj, function(err) {
-          if (err)
-            console.error(err);
-        });
-      });
+      }));
   }
 };
 
 defaults = (prop) => {
   let obj;
-  if (isThere(configFile)) {
+  if (sander.existsSync(configFile)) {
     obj = jsonfile.readFileSync(configFile);
     return obj[prop]
       ? obj[prop]

@@ -4,7 +4,7 @@ const fs = require('fs');
 const getSize = require('get-folder-size');
 const os = require('os');
 const path = require('path');
-const rimraf = require('rimraf');
+const sander = require('sander');
 
 const cacheDirectory = path.join(os.tmpdir(), 'wonderReader', 'cache');
 
@@ -34,6 +34,6 @@ clearCache = (currentDirectory) => {
   for (let i = 0; i < cacheContents.length; i++) {
     let item = path.join(cacheDirectory, cacheContents[i]);
     if (cacheContents[i] !== currentDirectory && fs.statSync(item).isDirectory())
-      rimraf.sync(item); // Deletes older directories for cached comics
+      sander.rimrafSync(item); // Deletes older directories for cached comics
   }
 };

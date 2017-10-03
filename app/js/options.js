@@ -2,6 +2,13 @@ const $ = require('jquery');
 const config = require('./config.js');
 const debounce = require('debounce');
 
+String.prototype.capitalize = () => {
+  let self = this;
+  console.log(this);
+  console.log(self);
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 let onInput,
   onStart,
   toggle;
@@ -82,9 +89,12 @@ onInput = (elem, display) => {
 
 // This uses options[i] to change input values onStart to that of the saved config.json[display]
 onStart = (elem, display) => {
+  console.log(elem);
+  console.log(display);
   let style = elem.dataset.style;
   let regex = /[a-z]+\(|\)/gi;
   let value = display[style].replace(regex, '');
+  console.log(style.capitalize());
   let text = document.getElementById(`opt${style.capitalize()}Text`);
   elem.value = value;
   text.value = value;

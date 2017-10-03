@@ -43,7 +43,7 @@ button {
   background-color: rgba(0, 0, 0, 0.1);
   border: 0;
   color: rgba(255, 255, 255, 0.9);
-  transition: all 0.5s;
+  transition: all .5s;
   padding: 6px 6px 7px;
   cursor: pointer;
 }
@@ -100,7 +100,7 @@ button:disabled:hover {
 
 .title {
   margin-left: 15px;
-  transition: margin-left 0.5s;
+  transition: margin-left .5s;
   float: left;
 }
 
@@ -143,7 +143,7 @@ button:disabled:hover {
   background: #148bb5;
   border-radius: 4px;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  transition: all 0.5s;
+  transition: all .5s;
 }
 #cpanel input[type=range]:focus::-webkit-slider-runnable-track {
   box-shadow: 0 0 5px 2px #91d5fd;
@@ -160,7 +160,7 @@ button:disabled:hover {
   padding: 3px 26px 0 0;
   border: 2px solid rgba(255, 255, 255, 0.8);
   outline: none;
-  transition: all 0.5s;
+  transition: all .5s;
 }
 #cpanel #zoomText:focus {
   box-shadow: 0 0 5px 2px #91d5fd;
@@ -264,7 +264,7 @@ button#trash {
   background: #148bb5;
   border-radius: 4px;
   border: 2px solid rgba(255, 255, 255, 0.8);
-  transition: all 0.5s;
+  transition: all .5s;
 }
 #optWindow input[type=range]:focus::-webkit-slider-runnable-track {
   box-shadow: 0 0 5px 2px #91d5fd;
@@ -297,7 +297,7 @@ button#trash {
 }
 #mainLib ul {
   clear: both;
-  font-size: 10px;
+  font-size: 12px;
   color: #fff;
 }
 #mainLib ul ul {
@@ -305,16 +305,16 @@ button#trash {
   box-shadow: inset 0 5px 5px 3px rgba(0, 0, 0, 0.8);
 }
 #mainLib li {
+  font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.15s;
+  transition: box-shadow .15s;
   border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
 #mainLib li:nth-child(even) {
   background-color: transparent;
 }
 #mainLib li.folder {
-  font-weight: bold;
   padding: 2px 0 2px 15px;
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -335,6 +335,7 @@ button#trash {
 }
 #mainLib #libList .fa-file {
   color: #91d5fd;
+  margin-right: 20px;
 }
 #mainLib #libList .fa-folder {
   color: #ecc76f;
@@ -348,7 +349,7 @@ button#trash {
   cursor: pointer;
 }
 #mainLib #ulLib .fa-caret-down {
-  transition: transform 0.5s;
+  transition: transform .5s;
 }
 #mainLib #ulLib .rotate {
   transform: rotate(-90deg);
@@ -368,7 +369,7 @@ button#trash {
   position: fixed;
   top: -30px;
   padding: 0;
-  transition: top 0.25s;
+  transition: top .25s;
   text-shadow: 0 5px 0 #0e2e3b;
   z-index: 1;
   background: none;
@@ -377,7 +378,7 @@ button#trash {
   font-size: 110px;
   padding: 0;
   color: #fff;
-  transition: all 0.25s;
+  transition: all .25s;
 }
 
 #libDropDown:hover {
@@ -425,7 +426,7 @@ button#trash {
   z-index: 2;
   border-right: 3px solid #0e2e3b;
   word-wrap: break-word;
-  transition: margin-left 0.65s;
+  transition: margin-left .65s;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5);
 }
 .library h1 {
@@ -438,7 +439,7 @@ button#trash {
   float: left;
   width: 100%;
   height: 90%;
-  transition: all 0.25s;
+  transition: all .25s;
   overflow-y: scroll;
 }
 .library li {
@@ -457,7 +458,7 @@ button#trash {
   padding: 3px 0 3px 10px;
   display: block;
   text-decoration: none;
-  transition: all 0.25s;
+  transition: all .25s;
   color: #fff;
   box-shadow: inset 3px 0 0 0 #ddbfeb;
 }
@@ -471,7 +472,7 @@ button#trash {
 .library .current span {
   display: block;
   text-decoration: none;
-  transition: all 0.25s;
+  transition: all .25s;
   padding: 3px 0 3px 10px;
   color: #fff;
   box-shadow: inset 2px 0 0 1px #ddbfeb;
@@ -495,7 +496,7 @@ button#trash {
 }
 
 #libSlider {
-  transition: right 0.25s;
+  transition: right .25s;
   position: absolute;
   font-size: 65px;
   top: 50vh;
@@ -549,7 +550,7 @@ button#trash {
   width: 50%;
 }
 .mainWindow #innerWindow {
-  transition: filter 0.3s;
+  transition: filter .3s;
 }
 .mainWindow .navi-button {
   position: fixed;
@@ -587,7 +588,7 @@ button#trash {
   background: #148bb5;
   position: fixed;
   border-radius: 50%;
-  opacity: 0.85;
+  opacity: .85;
   box-shadow: 0 0 12px -3px #000;
   z-index: 5;
 }

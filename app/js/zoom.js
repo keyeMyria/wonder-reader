@@ -62,7 +62,7 @@ width = () => {
 };
 
 // Saves zoom levels with debounce
-zoomEvent.on('save', function() {
+zoomEvent.on('save', () => {
   debounce(config.zoomSave(zoomSlide.value), 250);
 });
 

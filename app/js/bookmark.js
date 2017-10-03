@@ -1,9 +1,9 @@
 // bookmark.js updates read percentage as well as saving the position in $temp/bookmark.json
 
-const isThere = require('is-there');
 const jsonfile = require('jsonfile');
 const os = require('os');
 const path = require('path');
+const sander = require('sander');
 
 let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"}
 let baseName,
@@ -22,7 +22,7 @@ exports.onLoad = (filePath, directoryContents) => {
     fullIndex: directoryContents.length - 1
   };
 
-  if (isThere(bookmark)) {
+  if (sander.existsSync(bookmark)) {
     obj = jsonfile.readFileSync(bookmark);
     if (obj[baseName]) { // if baseName is listed
       return obj[baseName].currentIndex;
@@ -61,7 +61,7 @@ exports.onChange = (index) => {
 };
 
 exports.onStart = () => {
-  obj = isThere(bookmark)
+  obj = sander.existsSync(bookmark)
     ? jsonfile.readFileSync(bookmark)
     : {};
 };
@@ -71,7 +71,7 @@ exports.percent = (fileName) => {
   let base = path.basename(fileName, path.extname(fileName));
   let spanClass = base.replace(regex, '');
   let percent;
-  if (isThere(bookmark)) {
+  if (sander.existsSync(bookmark)) {
     percent = obj[fileName]
       ? (obj[fileName].currentIndex / obj[fileName].fullIndex) * 100
       : 0;

@@ -1,7 +1,7 @@
 // directory.js merges directories within directories to then return a new path
 const path = require('path');
 const fs = require('fs');
-const rimraf = require('rimraf');
+const sander = require('sander');
 
 // Allowable File Types
 const imgTypes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
@@ -29,7 +29,7 @@ const dirCleaner = (directory) => {
     let newPath = path.join(directory, files[i]);
     if (fs.statSync(newPath).isDirectory()) {
       fs.readdirSync(newPath) == 0
-        ? rimraf.sync(newPath)
+        ? sander.rimrafSync(newPath)
         : dirCleaner(newPath);
     }
   }
