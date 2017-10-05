@@ -3,14 +3,6 @@
     src: url('../fonts/CarterOne.ttf') format('truetype');
 }
 @font-face {
-    font-family: "Josefin";
-    src: url('../fonts/JosefinSans-Regular.ttf') format('truetype');
-}
-@font-face {
-    font-family: "Valera";
-    src: url('../fonts/VarelaRound-Regular.ttf') format('truetype');
-}
-@font-face {
-    font-family: "Ubuntu";
-    src: url('../fonts/Ubuntu-Regular.ttf') format('truetype');
+    font-family: "UbuntuMono";
+    src: url('../fonts/UbuntuMono-Regular.ttf') format('truetype');
 }

@@ -86,10 +86,12 @@ defaults = (prop) => {
   let obj;
   if (sander.existsSync(configFile)) {
     obj = jsonfile.readFileSync(configFile);
+    // console.log(obj);
     return obj[prop]
       ? obj[prop]
       : template[prop];
   } else {
+    // console.log(template[prop]);
     return template[prop];
   }
 };

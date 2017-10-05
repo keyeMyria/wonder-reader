@@ -23,7 +23,7 @@ $manila: #ecc76f;
 
 body {
   margin: 0;
-  font-family: Ubuntu;
+  font-family: UbuntuMono;
   -webkit-user-select: none;
 }
 
@@ -344,7 +344,7 @@ button#trash {
 
   ul {
     clear: both;
-    font-size: 12px;
+    font-size: 15px;
     color: $white;
 
     ul {
@@ -366,7 +366,7 @@ button#trash {
   }
 
   li.folder {
-    padding: 2px 0 2px 15px;
+    padding: 0 0 1px 15px;
     background: $white-trans-deg;
     border-top: 1px solid $white-trans-deg;
     .folder {
@@ -389,7 +389,7 @@ button#trash {
 
     .fa-file {
       color: $input-bleu;
-      margin-right: 20px;
+      margin-right: 25px;
     }
 
     .fa-folder {
@@ -457,6 +457,7 @@ button#trash {
   font-size: 14px;
   float: right;
   padding: 0 10px;
+  font-weight: bold;
 
   .code {
     border: 1px solid $white-opaque-deg;
@@ -519,7 +520,7 @@ button#trash {
     cursor: pointer;
     clear: both;
     font-size: 10px;
-    font-family: Ubuntu;
+    font-family: UbuntuMono;
     line-height: 1.42857143;
     white-space: nowrap;
   }

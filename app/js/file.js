@@ -6,6 +6,7 @@ const {dialog} = require('electron').remote;
 const fs = require('fs');
 const isRar = require('is-rar');
 const isZip = require('is-zip');
+const mkdirp = require('mkdirp');
 const os = require('os'); // https://nodejs.org/api/os.html
 const path = require('path');
 const sander = require('sander');
@@ -101,7 +102,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
       : postExtract(fileName, tempFolder, extractedImages);
   } else {
     preLoad();
-    sander.mkdirSync(tempFolder, {'mode': '0777'});
+    mkdirp.sync(tempFolder, {mode: '0777'});
     fileRouter(fileName, tempFolder, looper);
   }
 }; // End Directory checker
@@ -140,7 +141,7 @@ exports.dialog = () => {
 exports.loader = (fileName) => {
   fileName = decodeURIComponent(fileName);
   console.log(fileName);
-  isThere(fileName)
+  sander.existsSync(fileName)
     ? fileLoad(fileName)
     : alert(`Missing or broken file: Could not open ${fileName}`);
 };

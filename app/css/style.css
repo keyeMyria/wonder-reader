@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Ubuntu;
+  font-family: UbuntuMono;
   -webkit-user-select: none;
 }
 
@@ -297,7 +297,7 @@ button#trash {
 }
 #mainLib ul {
   clear: both;
-  font-size: 12px;
+  font-size: 15px;
   color: #fff;
 }
 #mainLib ul ul {
@@ -315,7 +315,7 @@ button#trash {
   background-color: transparent;
 }
 #mainLib li.folder {
-  padding: 2px 0 2px 15px;
+  padding: 0 0 1px 15px;
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -335,7 +335,7 @@ button#trash {
 }
 #mainLib #libList .fa-file {
   color: #91d5fd;
-  margin-right: 20px;
+  margin-right: 25px;
 }
 #mainLib #libList .fa-folder {
   color: #ecc76f;
@@ -390,6 +390,7 @@ button#trash {
   font-size: 14px;
   float: right;
   padding: 0 10px;
+  font-weight: bold;
 }
 #libStatus .code {
   border: 1px solid rgba(255, 255, 255, 0.8);
@@ -446,7 +447,7 @@ button#trash {
   cursor: pointer;
   clear: both;
   font-size: 10px;
-  font-family: Ubuntu;
+  font-family: UbuntuMono;
   line-height: 1.42857143;
   white-space: nowrap;
 }

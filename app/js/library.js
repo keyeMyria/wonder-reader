@@ -35,6 +35,8 @@ toggle = () => {
 
 // Builds the library with proper HTML
 buildLibrary = (directory, listID) => {
+  // console.log(directory);
+  // console.log(listID);
   if (!sander.existsSync(directory)) {
     console.error(`${directory} not found.`);
     libStatus.innerHTML = libError;
@@ -42,7 +44,7 @@ buildLibrary = (directory, listID) => {
   }
   let files = fs.readdirSync(directory);
   libStatus.innerHTML = loading;
-
+  // console.log(files);
   // `For` loop to create elements for the DOM
   for (let i = 0; i < files.length; i++) {
     let file = files[i];
@@ -55,8 +57,8 @@ buildLibrary = (directory, listID) => {
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
         filePath = filePath.replace(/\\/g, '/');
-        console.log(filePath);
       }
+      // console.log(filePath);
       $(`#${listID}`).append(`<li class="file">
           <a href="#" onclick="file.loader('${filePath}')">
             <i class="fa fa-file" aria-hidden="true"></i>
@@ -119,7 +121,7 @@ folders = (directory, ID) => { // Toggle for folders in MainLib
   for (let i = 0; i < folders.length; i++) {
     let newID = folders[i].dataset.id;
     let newDirectory = folders[i].dataset.directory;
-    folders[i].querySelector('span').addEventListener('click', () => {
+    folders[i].querySelector('span').addEventListener('click', function() {
       if ($(`#${newID}`).children().length == 0)
         buildLibrary(newDirectory, newID);
       let _ul = $(this).next('ul');
