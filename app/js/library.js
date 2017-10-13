@@ -54,7 +54,6 @@ buildLibrary = (directory, listID) => {
       // Converts win32 paths to HTML compatible paths
       if (process.platform == 'win32') {
         fullFilePath = fullFilePath.replace(/\\/g, '/');
-        // console.log(fullFilePath);
       }
       $(`#${listID}`).append(`<li class="file">
           <a href="#" onclick="file.loader('${fullFilePath}')">

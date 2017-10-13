@@ -176,19 +176,15 @@ rarExtractor = (fileName, tempFolder, looper) => {
   } else {
     return zipExtractor(fileName, tempFolder, Number(looper) + 1);
   }
-  // console.dir(extracted);
+
   let counter = 0;
   console.log(tempFolder);
-  // mkdirp.sync(tempFolder);
-  extracted[1].files.forEach(function(file) {
 
-    // console.dir(file);
+  extracted[1].files.forEach(function(file) {
     let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
 
     if (!file.fileHeader.flags.directory) {
       // console.log(dest);
-      // mkdirp(path.dirname(dest), (err) => {
-      // if (err) {console.log(err);}
       fs.appendFile(dest, new Buffer(file.extract[1]), (err) => {
         if (err) {console.log(err);}
         counter++;

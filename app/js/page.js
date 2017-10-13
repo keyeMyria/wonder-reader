@@ -30,7 +30,7 @@ exports.load = (file, DIR, IMAGES) => {
     r;
   filePath = DIR;
   extractedImages = IMAGES;
-  console.dir(extractedImages);
+  // console.dir(extractedImages);
   centerFolds = center.fold(filePath, extractedImages);
 
   pageNumber = 0;
