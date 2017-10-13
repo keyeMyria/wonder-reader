@@ -94,6 +94,7 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   document.getElementById('trash').dataset.current = comic;
   // tempFolder Variable for loaded comic
   tempFolder = path.join(os.tmpdir(), 'wonderReader', 'cache', comic);
+  console.log(tempFolder);
   if (isThere(tempFolder)) {
     tempFolder = df.merge(tempFolder);
     extractedImages = fs.readdirSync(tempFolder);
@@ -169,6 +170,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
   let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
   let extractor = unrar.createExtractorFromData(buf);
   let extracted = extractor.extractAll();
+  console.log(extracted[1]);
   if (extracted[1]) {
     extracted[1].files = extracted[1].files.reverse();
   } else {
@@ -176,17 +178,37 @@ rarExtractor = (fileName, tempFolder, looper) => {
   }
   // console.dir(extracted);
   let counter = 0;
+  console.log(tempFolder);
+  // mkdirp.sync(tempFolder);
   extracted[1].files.forEach(function(file) {
-    counter++;
+
     // console.dir(file);
-    let dest = path.join(tempFolder, file.fileHeader.name);
-    !file.fileHeader.flags.directory
-      ? fs.appendFileSync(dest, new Buffer(file.extract[1]))
-      : mkdirp.sync(path.join(tempFolder, file.fileHeader.name));
-    // console.log(`Counter = ${counter} || Files.length = ${extracted[1].files.length}`);
-    if (counter == extracted[1].files.length) {
-      console.log('Rar File proceeding to extract router.');
-      extractRouter(fileName, tempFolder, looper);
+    let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
+
+    if (!file.fileHeader.flags.directory) {
+      // console.log(dest);
+      // mkdirp(path.dirname(dest), (err) => {
+      // if (err) {console.log(err);}
+      fs.appendFile(dest, new Buffer(file.extract[1]), (err) => {
+        if (err) {console.log(err);}
+        counter++;
+        // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
+        if (counter == extracted[1].files.length) {
+          console.log('Rar File proceeding to extract router.');
+          extractRouter(fileName, tempFolder, looper);
+        }
+      });
+
+    } else {
+      console.log('mkdirp: ' + dest);
+      mkdirp(path.join(tempFolder, file.fileHeader.name), () => {
+        counter++;
+        // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
+        if (counter == extracted[1].files.length) {
+          console.log('Rar File proceeding to extract router.');
+          extractRouter(fileName, tempFolder, looper);
+        }
+      });
     }
   });
 };
