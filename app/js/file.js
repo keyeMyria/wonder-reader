@@ -166,7 +166,62 @@ fileRouter = (fileName, tempFolder, looper) => {
   });
 };
 
+let timer = (time) => {
+  return (Date.now() - time) / 1000;
+};
+
 rarExtractor = (fileName, tempFolder, looper) => {
+  let time = Date.now();
+  fs.readFile(fileName, (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(timer(time));
+    let buf = Uint8Array.from(data).buffer;
+    console.log(buf);
+    console.log(timer(time));
+    let extractor = unrar.createExtractorFromData(buf);
+    console.log(extractor);
+    console.log(timer(time));
+    let extracted = extractor.extractAll();
+    console.log(extracted);
+    console.log(timer(time));
+    let counter = 0;
+    console.log(tempFolder);
+
+    extracted[1].files.forEach(function(file) {
+      let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
+      console.log(timer(time));
+
+      if (!file.fileHeader.flags.directory) {
+        // console.log(dest);
+        fs.appendFile(dest, new Buffer(file.extract[1]), (err) => {
+          if (err) {console.log(err);}
+          counter++;
+          // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
+          if (counter == extracted[1].files.length) {
+            console.log(timer(time));
+            console.log('Rar File proceeding to extract router.');
+            extractRouter(fileName, tempFolder, looper);
+          }
+        });
+
+      } else {
+        console.log('mkdirp: ' + dest);
+        mkdirp(path.join(tempFolder, file.fileHeader.name), () => {
+          counter++;
+          // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
+          if (counter == extracted[1].files.length) {
+            console.log('Rar File proceeding to extract router.');
+            extractRouter(fileName, tempFolder, looper);
+          }
+        });
+      }
+    });
+  });
+};
+
+let rarExtractorSync = (fileName, tempFolder, looper) => {
   let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
   let extractor = unrar.createExtractorFromData(buf);
   let extracted = extractor.extractAll();
