@@ -6,17 +6,15 @@ const isComic = require('./isComic.js');
 const path = require('path');
 
 // Function variable
-let enable, disable;
-
-enable = (id) => { document.getElementById(id).disabled = false; };
-disable = (id) => { document.getElementById(id).disabled = true; };
+let enable = (id) => { document.getElementById(id).disabled = false; };
+let disable = (id) => { document.getElementById(id).disabled = true; };
 
 const nextComic = document.getElementById('nextComic');
 const prevComic = document.getElementById('prevComic');
 
 // Configures Next/Prev comic buttons
 exports.load = (fileName) => {
-  let baseName, dirName, comicSeries, comics, currentIssue, nextSrc, prevSrc;
+  let baseName, comicSeries, comics, currentIssue, dirName, nextSrc, prevSrc;
   disable('nextComic');
   disable('prevComic');
 

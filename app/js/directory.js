@@ -36,19 +36,17 @@ const dirCleaner = (directory) => {
 };
 
 exports.merge = (directory) => {
-  let extractedFiles,
+  let extractedFiles = filter(directory),
     filtered;
-
-  extractedFiles = filter(directory);
 
   if (extractedFiles.length > 0) {
     while (validPath(directory, extractedFiles[0])) {
       filtered = '';
 
       // Pushes [i] to array for merging paths
-      if (validExtName(extractedFiles[0]) || validPath(directory, extractedFiles[0])) {
+      if (validExtName(extractedFiles[0]) || validPath(directory, extractedFiles[0]))
         filtered = extractedFiles[0];
-      }
+
       directory = path.join(directory, filtered);
 
       // removes unwanted metadata and other stuff
@@ -61,8 +59,8 @@ exports.merge = (directory) => {
 // Splits a path, encodes each index, and merges it all for a URI compatible file path.
 exports.encode = (oldPath) => {
   let c,
-    newPath = '';
-  let tempPath = oldPath.split(path.sep); // Breaks path into array
+    newPath = '',
+    tempPath = oldPath.split(path.sep); // Breaks path into array
   // Encodes each folder, then merging it all together
   switch (process.platform) {
     case 'win32':

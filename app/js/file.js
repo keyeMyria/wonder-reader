@@ -85,10 +85,9 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
     return console.error(err);
   let looper = 0;
   // corrects a possible err with HTML loading
-  if (process.platform == 'win32') {
+  if (process.platform == 'win32')
     fileName = fileName.replace(/\//g, '\\');
-  }
-  console.log(fileName);
+  // console.log(fileName);
   comic = path.basename(fileName, path.extname(fileName)).replace(/#|!|,/g, '');
 
   document.getElementById('trash').dataset.current = comic;
@@ -166,33 +165,30 @@ fileRouter = (fileName, tempFolder, looper) => {
   });
 };
 
-let timer = (time) => {
-  return (Date.now() - time) / 1000;
-};
+// let timer = (time) => { return (Date.now() - time) / 1000; };
 
 rarExtractor = (fileName, tempFolder, looper) => {
-  let time = Date.now();
+  // let time = Date.now();
   fs.readFile(fileName, (err, data) => {
-    if (err) {
+    if (err)
       console.log(err);
-    }
-    console.log(timer(time));
-    console.log(data);
+    // console.log(timer(time));
+    // console.log(data);
     let buf = Uint8Array.from(data).buffer;
-    console.log(buf);
-    console.log(timer(time));
+    // console.log(buf);
+    // console.log(timer(time));
     let extractor = unrar.createExtractorFromData(buf);
-    console.log(extractor);
-    console.log(timer(time));
+    // console.log(extractor);
+    // console.log(timer(time));
     let extracted = extractor.extractAll();
-    console.log(extracted);
-    console.log(timer(time));
+    // console.log(extracted);
+    // console.log(timer(time));
     let counter = 0;
-    console.log(tempFolder);
+    // console.log(tempFolder);
 
     extracted[1].files.forEach(function(file) {
       let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
-      console.log(timer(time));
+      // console.log(timer(time));
 
       if (!file.fileHeader.flags.directory) {
         // console.log(dest);
@@ -201,7 +197,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
           counter++;
           // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
           if (counter == extracted[1].files.length) {
-            console.log(timer(time));
+            // console.log(timer(time));
             console.log('Rar File proceeding to extract router.');
             extractRouter(fileName, tempFolder, looper);
           }
