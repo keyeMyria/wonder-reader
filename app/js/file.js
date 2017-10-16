@@ -177,6 +177,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
       console.log(err);
     }
     console.log(timer(time));
+    console.log(data);
     let buf = Uint8Array.from(data).buffer;
     console.log(buf);
     console.log(timer(time));
@@ -221,48 +222,48 @@ rarExtractor = (fileName, tempFolder, looper) => {
   });
 };
 
-let rarExtractorSync = (fileName, tempFolder, looper) => {
-  let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
-  let extractor = unrar.createExtractorFromData(buf);
-  let extracted = extractor.extractAll();
-  console.log(extracted[1]);
-  if (extracted[1]) {
-    extracted[1].files = extracted[1].files.reverse();
-  } else {
-    return zipExtractor(fileName, tempFolder, Number(looper) + 1);
-  }
-
-  let counter = 0;
-  console.log(tempFolder);
-
-  extracted[1].files.forEach(function(file) {
-    let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
-
-    if (!file.fileHeader.flags.directory) {
-      // console.log(dest);
-      fs.appendFile(dest, new Buffer(file.extract[1]), (err) => {
-        if (err) {console.log(err);}
-        counter++;
-        // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
-        if (counter == extracted[1].files.length) {
-          console.log('Rar File proceeding to extract router.');
-          extractRouter(fileName, tempFolder, looper);
-        }
-      });
-
-    } else {
-      console.log('mkdirp: ' + dest);
-      mkdirp(path.join(tempFolder, file.fileHeader.name), () => {
-        counter++;
-        // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
-        if (counter == extracted[1].files.length) {
-          console.log('Rar File proceeding to extract router.');
-          extractRouter(fileName, tempFolder, looper);
-        }
-      });
-    }
-  });
-};
+// let rarExtractorSync = (fileName, tempFolder, looper) => {
+//   let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
+//   let extractor = unrar.createExtractorFromData(buf);
+//   let extracted = extractor.extractAll();
+//   console.log(extracted[1]);
+//   if (extracted[1]) {
+//     extracted[1].files = extracted[1].files.reverse();
+//   } else {
+//     return zipExtractor(fileName, tempFolder, Number(looper) + 1);
+//   }
+//
+//   let counter = 0;
+//   console.log(tempFolder);
+//
+//   extracted[1].files.forEach(function(file) {
+//     let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
+//
+//     if (!file.fileHeader.flags.directory) {
+//       // console.log(dest);
+//       fs.appendFile(dest, new Buffer(file.extract[1]), (err) => {
+//         if (err) {console.log(err);}
+//         counter++;
+//         // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
+//         if (counter == extracted[1].files.length) {
+//           console.log('Rar File proceeding to extract router.');
+//           extractRouter(fileName, tempFolder, looper);
+//         }
+//       });
+//
+//     } else {
+//       console.log('mkdirp: ' + dest);
+//       mkdirp(path.join(tempFolder, file.fileHeader.name), () => {
+//         counter++;
+//         // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
+//         if (counter == extracted[1].files.length) {
+//           console.log('Rar File proceeding to extract router.');
+//           extractRouter(fileName, tempFolder, looper);
+//         }
+//       });
+//     }
+//   });
+// };
 
 zipExtractor = (fileName, tempFolder, looper) => {
   fs.createReadStream(fileName).pipe(unzip.Extract({path: tempFolder}).on('close', function() {
