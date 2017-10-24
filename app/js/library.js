@@ -17,24 +17,41 @@ const libError = 'Library not found. Click <span class="code"><i class="fa fa-se
 const loading = 'Your library is loading';
 const finished = '';
 
-// Function variables
-let build,
-  toggle,
-  buildLibrary,
-  slide,
-  folders;
-
 // Library Windows collapsing
-slide = () => {
+let slide = () => {
   sideLib.classList.toggle('shift-left');
 };
 
-toggle = () => {
+let toggle = () => {
   $('#mainLib').slideToggle(800);
 };
 
+let build = (fullFilePath) => {
+  config.libSave(fullFilePath);
+  config.databaseBuild(fullFilePath);
+  $('#ulLib li, #ulLib ul').remove();
+  buildLibrary(fullFilePath, 'ulLib');
+};
+
+let folders = (directory, ID) => { // Toggle for folders in MainLib
+  let folders = document.querySelectorAll(`#${ID} .folder`);
+  for (let i = 0; i < folders.length; i++) {
+    let newID = folders[i].dataset.id;
+    let newDirectory = folders[i].dataset.directory;
+    folders[i].querySelector('span').addEventListener('click', function() {
+      if ($(`#${newID}`).children().length == 0)
+        buildLibrary(newDirectory, newID);
+      let _ul = $(this).next('ul');
+      if (_ul.is(':animated'))
+        return;
+      $(this).children('.fa-caret-down').toggleClass('rotate');
+      _ul.slideToggle(300, 'linear');
+    });
+  }
+};
+
 // Builds the library with proper HTML
-buildLibrary = (directory, listID) => {
+let buildLibrary = (directory, listID) => {
   if (!isThere(directory)) {
     console.error(`${directory} not found.`);
     libStatus.innerHTML = libError;
@@ -104,28 +121,4 @@ exports.openDir = () => {
 // Exported version of buildLibrary()
 exports.builder = (fullFilePath) => {
   build(fullFilePath);
-};
-
-build = (fullFilePath) => {
-  config.libSave(fullFilePath);
-  config.databaseBuild(fullFilePath);
-  $('#ulLib li, #ulLib ul').remove();
-  buildLibrary(fullFilePath, 'ulLib');
-};
-
-folders = (directory, ID) => { // Toggle for folders in MainLib
-  let folders = document.querySelectorAll(`#${ID} .folder`);
-  for (let i = 0; i < folders.length; i++) {
-    let newID = folders[i].dataset.id;
-    let newDirectory = folders[i].dataset.directory;
-    folders[i].querySelector('span').addEventListener('click', function() {
-      if ($(`#${newID}`).children().length == 0)
-        buildLibrary(newDirectory, newID);
-      let _ul = $(this).next('ul');
-      if (_ul.is(':animated'))
-        return;
-      $(this).children('.fa-caret-down').toggleClass('rotate');
-      _ul.slideToggle(300, 'linear');
-    });
-  }
 };

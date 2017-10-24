@@ -12,24 +12,19 @@ const inner = document.getElementById('innerWindow');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
-// Function Variables
-let autoResize,
-  width,
-  textUpdate;
-
-// Syncs dial to output box
-textUpdate = (val) => {
-  document.getElementById('zoomText').value = val;
-};
-
 // Function that resizes innerWindow div
-autoResize = () => {
+let autoResize = () => {
   inner.style.height = viewOne.clientHeight >= viewTwo.clientHeight
     ? `${viewOne.clientHeight}px`
     : `${viewTwo.clientHeight}px`;
 };
 
-width = () => {
+// Syncs dial to output box
+let textUpdate = (val) => {
+  document.getElementById('zoomText').value = val;
+};
+
+let width = () => {
   // Center Points X || Y
   let cPX = viewer.scrollTop + viewer.clientHeight / 2;
   let cPY = viewer.scrollLeft + viewer.clientWidth / 2;

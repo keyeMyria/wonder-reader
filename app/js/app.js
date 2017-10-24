@@ -15,10 +15,6 @@ const optWindow = document.getElementById('optWindow');
 const viewer = document.getElementById('viewer');
 const zoomSlide = document.getElementById('zoomSlider');
 
-// Function Variables
-let handleError,
-  objPositioner;
-
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -40,14 +36,14 @@ document.addEventListener('keydown', function(event) {
 });
 
 // Error Handling
-handleError = (event) => {
+let handleError = (event) => {
   event.message
     ? alert(`Error: ${event.message} at linenumber: ${event.lineno} of file: ${event.filename}`)
     : alert(`Error: ${event.type} from element: ${ (event.srcElement || event.target)}`);
 };
 window.addEventListener('error', handleError, true);
 
-objPositioner = () => {
+let objPositioner = () => {
   document.getElementById('dirLib').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('viewer').style.height = `${window.innerHeight - 56}px`;
   document.getElementById('bgLoader').style.left = `${window.innerWidth / 2 - 75}px`;

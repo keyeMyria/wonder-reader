@@ -16,7 +16,8 @@ exports.load = (fileName) => {
   $('.libDir').remove();
   for (let i = 0; i < comicSeries.length; i++) {
     let comic = comicSeries[i];
-    if (fs.statSync(path.join(dirName, comic)).isFile() && isComic(comic)) {
+    let filePath = path.join(dirName, comic);
+    if (fs.statSync(filePath).isFile() && isComic(comic)) {
       if (comic === baseName) {
         $('#dirLib').append(`
           <li class="libFile current">
@@ -27,7 +28,7 @@ exports.load = (fileName) => {
           </li>`
         );
       } else {
-        let file = df.encode(path.join(dirName, comic));
+        let file = df.encode(filePath);
         $('#dirLib').append(`
           <li class="libFile">
             <a href="#" onclick="file.loader('${file}')">

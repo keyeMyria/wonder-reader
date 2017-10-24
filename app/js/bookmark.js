@@ -5,8 +5,8 @@ const jsonfile = require('jsonfile');
 const os = require('os');
 const path = require('path');
 
-let template = {}; // {"name": "", "currentIndex": "0", "fullIndex": "0"}
-let baseName,
+let template = {}, // {"name": "", "currentIndex": "0", "fullIndex": "0"}
+  baseName,
   obj;
 const bookmark = path.join(os.tmpdir(), 'wonderReader', 'json', 'bookmark.json');
 const regex = /\s|#|\(|\)|'|,|&|\+|!|\[|\]/gi; // Reg Ex for classes
