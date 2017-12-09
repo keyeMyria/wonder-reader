@@ -2,19 +2,44 @@ const $ = require('jquery');
 const config = require('./config.js');
 const debounce = require('debounce');
 
-let onInput,
-  onStart,
-  toggle;
-
 const inner = document.getElementById('innerWindow');
 const optWindow = document.getElementById('optWindow');
 
-toggle = () => {
+let toggle = () => {
   let options = $('#optWindow');
   options.slideToggle(400, function() {
     if (options.is(':animated'))
       return;
   });
+};
+
+// ----- ELEM EXAMPLE, usually targetting `input[range]`
+//
+// <label for="optContrast">Contrast</label>
+// <input type="range" min="0.1" max="5" value="1" step="0.1" id="optContrastRange" for="optContrastText" name="optContrastRange" data-default="1" data-style="contrast" />
+// <output type="text" for="optContrastRange" id="optContrastText">1</output>
+// <button id="optContrastButton" data-style="contrast">
+//   <i class="fa fa-undo" aria-hidden="true"></i>
+// </button>
+
+// This uses option[i] and extracts and updates inputs
+let onInput = (elem, display) => {
+  let value = elem.value;
+  let style = elem.dataset.style;
+  let text = document.getElementById(`opt${style.capitalize()}Text`);
+  display[style] = `${style}(${value})`;
+  inner.style.webkitFilter = display.style();
+  text.value = value;
+};
+
+// This uses options[i] to change input values onStart to that of the saved config.json[display]
+let onStart = (elem, display) => {
+  let style = elem.dataset.style;
+  let regex = /[a-z]+\(|\)/gi;
+  let value = display[style].replace(regex, '');
+  let text = document.getElementById(`opt${style.capitalize()}Text`);
+  elem.value = value;
+  text.value = value;
 };
 
 exports.onStart = () => {
@@ -59,33 +84,4 @@ exports.onStart = () => {
 
 exports.toggle = () => {
   toggle();
-};
-
-// ----- ELEM EXAMPLE, usually targetting `input[range]`
-//
-// <label for="optContrast">Contrast</label>
-// <input type="range" min="0.1" max="5" value="1" step="0.1" id="optContrastRange" for="optContrastText" name="optContrastRange" data-default="1" data-style="contrast" />
-// <output type="text" for="optContrastRange" id="optContrastText">1</output>
-// <button id="optContrastButton" data-style="contrast">
-//   <i class="fa fa-undo" aria-hidden="true"></i>
-// </button>
-
-// This uses option[i] and extracts and updates inputs
-onInput = (elem, display) => {
-  let value = elem.value;
-  let style = elem.dataset.style;
-  let text = document.getElementById(`opt${style.capitalize()}Text`);
-  display[style] = `${style}(${value})`;
-  inner.style.webkitFilter = display.style();
-  text.value = value;
-};
-
-// This uses options[i] to change input values onStart to that of the saved config.json[display]
-onStart = (elem, display) => {
-  let style = elem.dataset.style;
-  let regex = /[a-z]+\(|\)/gi;
-  let value = display[style].replace(regex, '');
-  let text = document.getElementById(`opt${style.capitalize()}Text`);
-  elem.value = value;
-  text.value = value;
 };

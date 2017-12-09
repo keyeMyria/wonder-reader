@@ -24,14 +24,8 @@ const template = {
 const libNotFound = '<p>Library not found. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
 const libIsEmpty = '<p>The library is empty. Click <span class="code"><i class="fa fa-search"></i></span> to load a directory.</p>';
 
-// Function variables;
-let configSave,
-  databaseBuild,
-  defaults,
-  onStart;
-
 // Builds a database for comics
-databaseBuild = (filePath) => {
+let databaseBuild = (filePath) => {
   let Files = dirTree(filePath, ['.cbr', '.cbz']);
   jsonfile.writeFile(comics, Files, function(err) {
     if (err)
@@ -40,7 +34,7 @@ databaseBuild = (filePath) => {
   });
 };
 
-configSave = (type, val) => {
+let configSave = (type, val) => {
   // console.log(`${configFile} exists? ${isThere(configFile)}`);
   if (!isThere(configFile)) {
     jsonfile.writeFile(configFile, template, function(err) {
@@ -60,7 +54,7 @@ configSave = (type, val) => {
   }
 };
 
-onStart = () => {
+let onStart = () => {
   let libStatus = document.getElementById('libStatus');
   let obj;
   switch (isThere(configFile)) {
@@ -95,7 +89,7 @@ onStart = () => {
   }
 };
 
-defaults = (prop) => {
+let defaults = (prop) => {
   return isThere(configFile)
     ? jsonfile.readFileSync(configFile)[prop] || template[prop]
     : template[prop];

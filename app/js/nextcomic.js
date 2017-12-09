@@ -6,32 +6,30 @@ const isComic = require('./isComic.js');
 const path = require('path');
 
 // Function variable
-let enable, disable;
-
-enable = (id) => { document.getElementById(id).disabled = false; };
-disable = (id) => { document.getElementById(id).disabled = true; };
+let enable = (id) => { document.getElementById(id).disabled = false; };
+let disable = (id) => { document.getElementById(id).disabled = true; };
 
 const nextComic = document.getElementById('nextComic');
 const prevComic = document.getElementById('prevComic');
 
 // Configures Next/Prev comic buttons
 exports.load = (fileName) => {
-  let baseName, dirName, comicSeries, comics, currentIssue, nextSrc, prevSrc;
+  let nextSrc, prevSrc;
   disable('nextComic');
   disable('prevComic');
 
-  baseName = path.basename(fileName);
-  dirName = path.dirname(fileName);
-  comicSeries = fs.readdirSync(dirName);
+  let baseName = path.basename(fileName),
+    dirName = path.dirname(fileName),
+    comicSeries = fs.readdirSync(dirName);
 
   // Cleans out folders and non ['cbr', 'cbz'] files
-  comics = comicSeries.filter(function (x, i) {
+  let comics = comicSeries.filter(function (x, i) {
     let comic = path.join(dirName, comicSeries[i]);
     return fs.statSync(comic).isFile() && isComic(comic);
   });
 
   // Gets index position of file inside directory array
-  currentIssue = comics.indexOf(baseName); // Like a comic book issue!
+  let currentIssue = comics.indexOf(baseName); // Like a comic book issue!
 
   if (comics.length > 1) {
     if (currentIssue <= 0) { // If loaded comic is first comic in directory

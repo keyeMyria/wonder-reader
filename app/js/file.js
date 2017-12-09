@@ -34,26 +34,14 @@ const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const viewer = document.getElementById('viewer');
 
-// Functions variables
-let openFile,
-  fileLoad,
-  enable,
-  postExtract,
-  fileRouter,
-  rarExtractor,
-  zipExtractor,
-  extractRouter,
-  preLoad,
-  postLoad;
-
-preLoad = () => {
+let preLoad = () => {
   innerWindow.classList.add('innerLoading');
   loader.classList.add('loader');
   loader.classList.remove('hidden');
   bgLoader.classList.remove('hidden');
 };
 
-postLoad = () => {
+let postLoad = () => {
   innerWindow.classList.remove('innerLoading');
   loader.classList.add('hidden');
   loader.classList.remove('loader');
@@ -61,7 +49,7 @@ postLoad = () => {
 };
 
 // Dialog box to load the file
-openFile = () => {
+let openFile = () => {
   dialog.showOpenDialog({
     filters: [
       {
@@ -80,15 +68,14 @@ openFile = () => {
 };
 
 // The function that loads each file
-fileLoad = (fileName, err) => { // checks and extracts files and then loads them
+let fileLoad = (fileName, err) => { // checks and extracts files and then loads them
   if (err)
     return console.error(err);
   let looper = 0;
   // corrects a possible err with HTML loading
-  if (process.platform == 'win32') {
+  if (process.platform == 'win32')
     fileName = fileName.replace(/\//g, '\\');
-  }
-  console.log(fileName);
+  // console.log(fileName);
   comic = path.basename(fileName, path.extname(fileName)).replace(/#|!|,/g, '');
 
   document.getElementById('trash').dataset.current = comic;
@@ -109,12 +96,12 @@ fileLoad = (fileName, err) => { // checks and extracts files and then loads them
 }; // End Directory checker
 
 // Enable et Disable ID's
-enable = (id) => {
+let enable = (id) => {
   document.getElementById(id).disabled = false;
 };
 
 // After extraction, loads stuff into img tags, as well as other junk
-postExtract = (fileName, tempFolder, extractedImages) => {
+let postExtract = (fileName, tempFolder, extractedImages) => {
   // console.dir([fileName, tempFolder, extractedImages]);
   extractedImages = strain(extractedImages);
 
@@ -149,7 +136,7 @@ exports.loader = (fileName) => {
 };
 
 // File Extractors
-fileRouter = (fileName, tempFolder, looper) => {
+let fileRouter = (fileName, tempFolder, looper) => {
   fs.readFile(fileName, (err, data) => {
     if (err)
       return console.error(err);
@@ -166,32 +153,30 @@ fileRouter = (fileName, tempFolder, looper) => {
   });
 };
 
-let timer = (time) => {
-  return (Date.now() - time) / 1000;
-};
+// let timer = (time) => { return (Date.now() - time) / 1000; };
 
-rarExtractor = (fileName, tempFolder, looper) => {
-  let time = Date.now();
+let rarExtractor = (fileName, tempFolder, looper) => {
+  // let time = Date.now();
   fs.readFile(fileName, (err, data) => {
-    if (err) {
+    if (err)
       console.log(err);
-    }
-    console.log(timer(time));
+    // console.log(timer(time));
+    // console.log(data);
     let buf = Uint8Array.from(data).buffer;
-    console.log(buf);
-    console.log(timer(time));
+    // console.log(buf);
+    // console.log(timer(time));
     let extractor = unrar.createExtractorFromData(buf);
-    console.log(extractor);
-    console.log(timer(time));
+    // console.log(extractor);
+    // console.log(timer(time));
     let extracted = extractor.extractAll();
-    console.log(extracted);
-    console.log(timer(time));
+    // console.log(extracted);
+    // console.log(timer(time));
     let counter = 0;
-    console.log(tempFolder);
+    // console.log(tempFolder);
 
     extracted[1].files.forEach(function(file) {
       let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
-      console.log(timer(time));
+      // console.log(timer(time));
 
       if (!file.fileHeader.flags.directory) {
         // console.log(dest);
@@ -200,7 +185,7 @@ rarExtractor = (fileName, tempFolder, looper) => {
           counter++;
           // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
           if (counter == extracted[1].files.length) {
-            console.log(timer(time));
+            // console.log(timer(time));
             console.log('Rar File proceeding to extract router.');
             extractRouter(fileName, tempFolder, looper);
           }
@@ -221,56 +206,16 @@ rarExtractor = (fileName, tempFolder, looper) => {
   });
 };
 
-let rarExtractorSync = (fileName, tempFolder, looper) => {
-  let buf = Uint8Array.from(fs.readFileSync(fileName)).buffer;
-  let extractor = unrar.createExtractorFromData(buf);
-  let extracted = extractor.extractAll();
-  console.log(extracted[1]);
-  if (extracted[1]) {
-    extracted[1].files = extracted[1].files.reverse();
-  } else {
-    return zipExtractor(fileName, tempFolder, Number(looper) + 1);
-  }
-
-  let counter = 0;
-  console.log(tempFolder);
-
-  extracted[1].files.forEach(function(file) {
-    let dest = path.join(tempFolder, path.basename(file.fileHeader.name));
-
-    if (!file.fileHeader.flags.directory) {
-      // console.log(dest);
-      fs.appendFile(dest, new Buffer(file.extract[1]), (err) => {
-        if (err) {console.log(err);}
-        counter++;
-        // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
-        if (counter == extracted[1].files.length) {
-          console.log('Rar File proceeding to extract router.');
-          extractRouter(fileName, tempFolder, looper);
-        }
-      });
-
-    } else {
-      console.log('mkdirp: ' + dest);
-      mkdirp(path.join(tempFolder, file.fileHeader.name), () => {
-        counter++;
-        // console.log(`Counter: ${counter} :: files.length: ${extracted[1].files.length}`);
-        if (counter == extracted[1].files.length) {
-          console.log('Rar File proceeding to extract router.');
-          extractRouter(fileName, tempFolder, looper);
-        }
-      });
-    }
-  });
+let zipExtractor = (fileName, tempFolder, looper) => {
+  fs.createReadStream(fileName).pipe(
+    unzip.Extract({path: tempFolder})
+      .on('close', function() {
+        extractRouter(fileName, tempFolder, looper);
+      })
+  );
 };
 
-zipExtractor = (fileName, tempFolder, looper) => {
-  fs.createReadStream(fileName).pipe(unzip.Extract({path: tempFolder}).on('close', function() {
-    extractRouter(fileName, tempFolder, looper);
-  }));
-};
-
-extractRouter = (fileName, tempFolder, looper) => {
+let extractRouter = (fileName, tempFolder, looper) => {
   tempFolder = df.merge(tempFolder);
   extractedImages = fs.readdirSync(tempFolder);
   switch (true) {

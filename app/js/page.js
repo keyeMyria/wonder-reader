@@ -13,11 +13,6 @@ let centerFolds,
   pageNumber,
   loadedImages;
 
-// Function variables
-let defaults,
-  pageTurn,
-  singlePage;
-
 const viewOne = document.getElementById('viewImgOne');
 const viewTwo = document.getElementById('viewImgTwo');
 const column = document.getElementById('column');
@@ -25,39 +20,9 @@ const columnIcon = document.getElementById('columnIcon');
 const viewer = document.getElementById('viewer');
 const clearImg = path.join('.', 'images', 'FFFFFF-0.0.png');
 
-exports.load = (file, DIR, IMAGES) => {
-  let savedpageNumber,
-    r;
-  filePath = DIR;
-  extractedImages = IMAGES;
-  // console.dir(extractedImages);
-  centerFolds = center.fold(filePath, extractedImages);
-
-  pageNumber = 0;
-  savedpageNumber = Number(bookmark.onLoad(file, extractedImages));
-  viewOne.src = clearImg; // Clears the screen to minimize choppiness
-  viewTwo.src = clearImg;
-  if (savedpageNumber > 0) {
-    r = confirm(`Continue ${path.basename(file)} at page ${savedpageNumber}`);
-    pageNumber = r === true
-      ? savedpageNumber
-      : 0;
-  }
-  pageNumber = Number(pageNumber);
-
-  column.classList.remove('disabled');
-  Number(column.dataset.val) === 1
-    ? singlePage(filePath, extractedImages, pageNumber)
-    : defaults(filePath, extractedImages, pageNumber);
-  // Preloads each image file for a smoother experience
-  imageLoad();
-};
-
 async function imageLoad() {
   loadedImages = [];
   for (let i = 0; i < extractedImages.length; i++) {
-    // console.log(path.join(filePath, extractedImages[i]));
-    // console.log(df.encode(path.join(filePath, extractedImages[i])));
     let img = new Image();
     let imgSrc = df.encode(path.join(filePath, extractedImages[i]));
     img.src = imgSrc;
@@ -65,7 +30,7 @@ async function imageLoad() {
   }
 }
 
-pageTurn = (val) => {
+let pageTurn = (val) => {
   let polarity = val > 0
     ? 1
     : -1;
@@ -117,9 +82,7 @@ pageTurn = (val) => {
 };
 
 // For Single page viewing and styling
-singlePage = (filePath, extractedImages, pageNumber) => {
-  // console.log(path.join(filePath, extractedImages[pageNumber]));
-  // console.log(df.encode(path.join(filePath, extractedImages[pageNumber])));
+let singlePage = (filePath, extractedImages, pageNumber) => {
   viewOne.style.width = '100%';
   viewTwo.style.display = 'none';
   viewOne.src = df.encode(path.join(filePath, extractedImages[pageNumber]));
@@ -128,7 +91,7 @@ singlePage = (filePath, extractedImages, pageNumber) => {
   viewer.scrollLeft = 0;
 };
 
-defaults = (filePath, extractedImages, pageNumber) => {
+let defaults = (filePath, extractedImages, pageNumber) => {
   let val = Number(column.dataset.val),
     sizeOne,
     sizeTwo,
@@ -142,10 +105,6 @@ defaults = (filePath, extractedImages, pageNumber) => {
       if (pageNumber >= extractedImages.length - 1 || centerFolds.indexOf(pageNumber) > -1 || centerFolds.indexOf(pageNumber + 1) > -1) {
         singlePage(filePath, extractedImages, pageNumber);
       } else {
-        // console.log(path.join(filePath, extractedImages[pageNumber]));
-        // console.log(df.encode(path.join(filePath, extractedImages[pageNumber])));
-        // console.log(path.join(filePath, extractedImages[pageNumber + 1]));
-        // console.log(df.encode(path.join(filePath, extractedImages[pageNumber + 1])));
         viewOne.style.display = 'initial';
         viewTwo.style.display = 'initial';
 
@@ -174,6 +133,34 @@ exports.Right = () => { // See exports.spread
 exports.Left = () => {
   let val = column.dataset.val * -1;
   pageTurn(val);
+};
+
+exports.load = (file, DIR, IMAGES) => {
+  let savedpageNumber,
+    r;
+  filePath = DIR;
+  extractedImages = IMAGES;
+  // console.dir(extractedImages);
+  centerFolds = center.fold(filePath, extractedImages);
+
+  pageNumber = 0;
+  savedpageNumber = Number(bookmark.onLoad(file, extractedImages));
+  viewOne.src = clearImg; // Clears the screen to minimize choppiness
+  viewTwo.src = clearImg;
+  if (savedpageNumber > 0) {
+    r = confirm(`Continue ${path.basename(file)} at page ${savedpageNumber}`);
+    pageNumber = r === true
+      ? savedpageNumber
+      : 0;
+  }
+  pageNumber = Number(pageNumber);
+
+  column.classList.remove('disabled');
+  Number(column.dataset.val) === 1
+    ? singlePage(filePath, extractedImages, pageNumber)
+    : defaults(filePath, extractedImages, pageNumber);
+  // Preloads each image file for a smoother experience
+  imageLoad();
 };
 
 exports.spread = () => {
