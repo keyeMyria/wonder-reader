@@ -323,6 +323,7 @@ button#trash {
   height: 600px;
   z-index: 1;
   box-shadow: 0 0 10px 0 $dark-trans-opq;
+  font-weight: bold;
 
   h1 {
     margin-left: 10px;
@@ -366,7 +367,6 @@ button#trash {
   }
 
   li.folder {
-    font-weight: bold;
     background: $white-trans-deg;
     border-top: 1px solid $white-trans-deg;
     .folder {

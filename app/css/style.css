@@ -279,6 +279,7 @@ button#trash {
   height: 600px;
   z-index: 1;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.85);
+  font-weight: bold;
 }
 #mainLib h1 {
   margin-left: 10px;
@@ -315,7 +316,6 @@ button#trash {
   background-color: rgba(0, 0, 0, 0);
 }
 #mainLib li.folder {
-  font-weight: bold;
   background: rgba(255, 255, 255, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
