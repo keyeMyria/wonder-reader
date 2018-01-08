@@ -21,10 +21,10 @@
   "dependencies": {
     "debounce": "^1.0.2",
     "directory-tree": "2.0.0",
-    "electron-settings": "3.1.2",
-    "electron-unrar-js": "^1.0.1",
+    "electron-settings": "3.1.4",
+    "electron-unrar-js": "1.0.1",
     "get-folder-size": "1.0.0",
-    "image-size": "0.6.1",
+    "image-size": "0.6.2",
     "is-rar": "2.0.0",
     "is-there": "4.4.3",
     "is-zip": "^1.0.0",
@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "colors": "1.1.2",
-    "electron": "1.7.9",
-    "electron-packager": "9.1.0",
-    "eslint": "4.8.0",
+    "electron": "1.7.10",
+    "electron-packager": "^9.1.0",
+    "eslint": "4.15.0",
     "grunt": "1.0.1",
     "grunt-contrib-sass": "1.0.0",
     "grunt-contrib-watch": "1.0.0"
